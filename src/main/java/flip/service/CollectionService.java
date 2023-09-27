@@ -18,7 +18,7 @@ public class CollectionService {
 
     private final BookRepository bookRepository;
 
-    public List<Collection> getAllUsers(){
+    public List<Collection> getAllCollections(){
         return collectionRepository.findAll();
     }
 
