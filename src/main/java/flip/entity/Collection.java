@@ -3,7 +3,9 @@ package flip.entity;
 import javax.persistence.*;
 import lombok.*;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -23,11 +25,11 @@ public class Collection {
     @Column(name = "total_price")
     private Integer total_price;
 
-    @OneToMany(mappedBy="collection", cascade = CascadeType.ALL)
-    private List<Book> books;
+    @OneToMany(mappedBy="collection", cascade = CascadeType.PERSIST)
+    private Set<Book> books = new HashSet<>();
 
     @Override
     public String toString() {
-        return "CarbonTrackerUserEntity [userId=" + collection_id + "|" + name + "|" + total_price+ "|" + "|";
+        return "CarbonTrackerUserEntity [userId=" + collection_id + "|" + name + "|" + total_price+ "|" + books + "|";
     }
 }

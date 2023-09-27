@@ -1,6 +1,8 @@
 package flip.entity;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 @Getter
@@ -27,6 +29,7 @@ public class Book {
     @Column(name = "price")
     private Integer price;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="collection_id", referencedColumnName = "collection_id")
     private Collection collection;

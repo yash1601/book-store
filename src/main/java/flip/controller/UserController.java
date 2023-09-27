@@ -1,5 +1,6 @@
 package flip.controller;
 
+import flip.Dto.BookDto;
 import flip.entity.Book;
 import flip.entity.Collection;
 import flip.entity.User;
@@ -9,6 +10,7 @@ import flip.repository.UserRepository;
 import flip.service.BookService;
 import flip.service.CollectionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import flip.service.UserService;
@@ -76,5 +78,9 @@ public class UserController {
         return ResponseEntity.ok(collectionService.initiate().toString());
     }
 
-
+    @PutMapping("/collections")
+    public ResponseEntity<HttpStatus> updateCollection(@RequestParam(required = true) Integer id, @RequestBody BookDto bookDto){
+        collectionService.addBooksToCollection(id, bookDto);
+        return ResponseEntity.ok(HttpStatus.ACCEPTED);
+    }
 }
