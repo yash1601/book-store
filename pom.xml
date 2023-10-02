@@ -112,9 +112,22 @@
             <version>2.15.2</version>
         </dependency>
         <dependency>
+            <groupId>com.FF4J</groupId>
+            <artifactId>server</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/src/main/resources/libs/server-0.0.1-SNAPSHOT.jar</systemPath>
+        </dependency>
+
+        <dependency>
             <groupId>org.codehaus.jackson</groupId>
             <artifactId>jackson-mapper-asl</artifactId>
             <version>1.9.13</version>
+        </dependency>
+        <dependency>
+            <groupId>org.ff4j</groupId>
+            <artifactId>ff4j-spring-boot-starter</artifactId>
+            <version>1.9</version>
         </dependency>
 
 

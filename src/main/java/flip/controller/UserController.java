@@ -9,11 +9,13 @@ import flip.repository.CollectionRepository;
 import flip.repository.UserRepository;
 import flip.service.BookService;
 import flip.service.CollectionService;
+import org.ff4j.FF4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import flip.service.UserService;
+import com.FF4J.server.config.FF4jConfig;
 
 import javax.persistence.EntityManagerFactory;
 import java.util.List;
@@ -42,6 +44,9 @@ public class UserController {
     @Autowired
     private EntityManagerFactory entityManagerFactory;
 
+    @Autowired
+    private FF4j ff4j;
+
     @PostMapping("/register/user")
     public ResponseEntity<User> postNewUser(@RequestBody User user) {
         return ResponseEntity.ok(userRepository.save(user));
@@ -50,6 +55,7 @@ public class UserController {
 
     @PostMapping("/register/book")
     public ResponseEntity<Book> postNewBook(@RequestBody Book book) {
+        ff4j.check(FF4jConfig.HELLO_FEATURE);
         return ResponseEntity.ok(bookRepository.save(book));
     }
 
