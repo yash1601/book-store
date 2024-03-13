@@ -9,6 +9,7 @@ import flip.repository.CollectionRepository;
 import flip.repository.UserRepository;
 import flip.service.BookService;
 import flip.service.CollectionService;
+import io.prometheus.client.Counter;
 import org.ff4j.FF4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -41,6 +42,11 @@ public class UserController {
     private BookRepository bookRepository;
 
 
+    static final Counter counter = Counter.build()
+                                        .name("total_requests")
+                                        .help("total number of requests")
+                                        .register();
+
     @PostMapping("/register/user")
     public ResponseEntity<User> postNewUser(@RequestBody User user) {
         return ResponseEntity.ok(userRepository.save(user));
@@ -59,6 +65,7 @@ public class UserController {
 
     @GetMapping("/users")
     public ResponseEntity<List<User>> getAllUsers(){
+        counter.inc();
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
