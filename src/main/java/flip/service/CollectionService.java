@@ -33,7 +33,7 @@ public class CollectionService {
         Book book = new Book();
         book.setName("name");
         book.setAuthor("yash");
-        book.setGenre("author");
+        book.setCategory("author");
         book.setPrice(10);
         book.setCollection(collection);
         Set<Book> bookList = new HashSet<>();

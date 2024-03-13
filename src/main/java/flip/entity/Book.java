@@ -23,23 +23,31 @@ public class Book {
     @Column(name = "author")
     private String author;
 
-    @Column(name = "genre")
-    private String genre;
+    @Column(name = "category")
+    private String category;
 
     @Column(name = "price")
     private Integer price;
+
+    @Column(name = "sales")
+    private Integer sales;
+
+    @Column(name = "rating")
+    private Integer rating;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="collection_id", referencedColumnName = "collection_id")
     private Collection collection;
 
-    public Book Book(String name, String author, String genre, int i) {
+    public Book(long book_id, String name, String author, String category, Integer price, Integer sales, Integer rating) {
+        this.book_id = book_id;
         this.name = name;
         this.author = author;
-        this.genre = genre;
-        this.price = i;
-        return this;
+        this.category = category;
+        this.price = price;
+        this.sales = sales;
+        this.rating = rating;
     }
 
     @Override
