@@ -30,6 +30,6 @@ public class Collection {
 
     @Override
     public String toString() {
-        return "CarbonTrackerUserEntity [userId=" + collection_id + "|" + name + "|" + total_price+ "|" + books + "|";
+        return "Books:  [collection_id=" + collection_id + "|" + name + "|" + total_price+ "|" + books + "|";
     }
 }

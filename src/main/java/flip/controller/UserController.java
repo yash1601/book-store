@@ -10,14 +10,13 @@ import flip.repository.UserRepository;
 import flip.service.BookService;
 import flip.service.CollectionService;
 import io.prometheus.client.Counter;
-import org.ff4j.FF4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import flip.service.UserService;
 
-import javax.persistence.EntityManagerFactory;
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -54,24 +53,23 @@ public class UserController {
 
 
     @PostMapping("/register/book")
-    public ResponseEntity<Book> postNewBook(@RequestBody Book book) {
+    public ResponseEntity<Book> postNewBook(@RequestBody @Valid Book book) {
         return ResponseEntity.ok(bookRepository.save(book));
     }
 
     @PostMapping("/register/collection")
-    public ResponseEntity<Collection> postNewCollection(@RequestBody Collection collection) {
+    public ResponseEntity<Collection> postNewCollection(@RequestBody @Valid Collection collection) {
         return ResponseEntity.ok(collectionRepository.save(collection));
-    }
-
-    @GetMapping("/users")
-    public ResponseEntity<List<User>> getAllUsers(){
-        counter.inc();
-        return ResponseEntity.ok(userService.getAllUsers());
     }
 
     @GetMapping("/books")
     public ResponseEntity<List<Book>> getAllBooks(){
         return ResponseEntity.ok(bookService.getAllBooks());
+    }
+
+    @PutMapping("/books")
+    public ResponseEntity<Book> editBook(@RequestParam(value = "Id", required = true) String Id, @RequestBody Book book){
+        return ResponseEntity.ok(bookService.editBook(Id, book));
     }
 
     @GetMapping("/collections")
@@ -80,8 +78,8 @@ public class UserController {
     }
 
     @GetMapping("/initiate")
-    public ResponseEntity<String> Initiate(){
-        return ResponseEntity.ok(collectionService.initiate().toString());
+    public ResponseEntity<List<Book>> Initiate(){
+        return ResponseEntity.ok(collectionService.initiate());
     }
 
     @PutMapping("/collections")
