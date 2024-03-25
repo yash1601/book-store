@@ -28,7 +28,7 @@ public class CollectionService {
         return collectionRepository.findAll();
     }
 
-    public Collection initiate(){
+    public List<Book> initiate(){
         Collection collection = new Collection();
         Book book = new Book();
         book.setName("name");
@@ -42,7 +42,10 @@ public class CollectionService {
         Book book2 = new Book();
         bookRepository.save(book2);
         collectionRepository.save(collection);
-        return collection;
+        List<Book> listBooks = new ArrayList<Book>();
+        listBooks.add(book);
+        listBooks.add(book2);
+        return listBooks;
     }
 
     public void addBooksToCollection(Integer id, BookDto bookDto) {
