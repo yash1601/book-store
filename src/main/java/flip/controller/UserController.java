@@ -87,4 +87,14 @@ public class UserController {
         collectionService.addBooksToCollection(id, bookDto);
         return ResponseEntity.ok(HttpStatus.ACCEPTED);
     }
+    @PutMapping("/discount")
+    public ResponseEntity<String> addDiscount(@RequestParam(required = false) String author, @RequestParam(required = false) String category, @RequestParam Integer discount){
+        try {
+            bookService.addDiscount(author, category, discount);
+        }
+        catch (RuntimeException e){
+            return ResponseEntity.ok(e.getMessage());
+        }
+        return ResponseEntity.ok("Discount added");
+    }
 }

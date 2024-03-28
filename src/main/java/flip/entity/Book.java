@@ -27,7 +27,7 @@ public class Book {
     private String category;
 
     @Column(name = "price")
-    private Integer price;
+    private Float price;
 
     @Column(name = "sales")
     private Integer sales;
@@ -40,7 +40,7 @@ public class Book {
     @JoinColumn(name="collection_id", referencedColumnName = "collection_id")
     private Collection collection;
 
-    public Book(long book_id, String name, String author, String category, Integer price, Integer sales, Integer rating) {
+    public Book(long book_id, String name, String author, String category, Float price, Integer sales, Integer rating) {
         this.book_id = book_id;
         this.name = name;
         this.author = author;

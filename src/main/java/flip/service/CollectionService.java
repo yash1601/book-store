@@ -34,7 +34,7 @@ public class CollectionService {
         book.setName("name");
         book.setAuthor("yash");
         book.setCategory("author");
-        book.setPrice(10);
+        book.setPrice(10.0f);
         book.setCollection(collection);
         Set<Book> bookList = new HashSet<>();
         bookList.add(book);

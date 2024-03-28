@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -34,6 +35,32 @@ public class BookService {
         }
         else {
             throw new RuntimeException("Book not found");
+        }
+    }
+
+    public void addDiscount(String author, String category, Integer discount){
+        if(author == null && category == null){
+            throw new RuntimeException("Book not found");
+        }
+        else {
+            if(!author.isBlank()){
+                List<Book> bookListByAuthor = bookRepository.findByAuthor(author);
+                bookListByAuthor.forEach(book -> {
+                    Float currentPrice = book.getPrice();
+                    if(currentPrice.isNaN()) return;
+                    book.setPrice((currentPrice*(100-discount))/100);
+                    bookRepository.save(book);
+                });
+            }
+            if(!category.isBlank()){
+                List<Book> bookListByAuthor = bookRepository.findByCategory(category);
+                bookListByAuthor.forEach(book -> {
+                    Float currentPrice = book.getPrice();
+                    if(currentPrice.isNaN()) return;
+                    book.setPrice((currentPrice*(100-discount))/100);
+                    bookRepository.save(book);
+                });
+            }
         }
     }
 }
