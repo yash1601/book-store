@@ -1,26 +1,22 @@
 package flip.entity;
 
-import javax.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name="Users")
+@Document
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long user_id;
 
-    @Column(name = "name")
     private String name;
 
-    @Column(name = "email")
     private String email;
 
-    @Column(name = "password")
     private String password;
 }
