@@ -6,11 +6,9 @@ import flip.entity.Collection;
 import flip.repository.BookRepository;
 import flip.repository.CollectionRepository;
 import lombok.AllArgsConstructor;
-import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.*;
 
 import static java.lang.Long.parseLong;
@@ -35,10 +33,10 @@ public class CollectionService {
         book.setAuthor("yash");
         book.setCategory("author");
         book.setPrice(10.0f);
-        book.setCollection(collection);
+//        book.setCollection(collection);
         Set<Book> bookList = new HashSet<>();
         bookList.add(book);
-        collection.setBooks(bookList);
+//        collection.setBooks(bookList);
         Book book2 = new Book();
         bookRepository.save(book2);
         collectionRepository.save(collection);
@@ -50,14 +48,19 @@ public class CollectionService {
 
     public void addBooksToCollection(Integer id, BookDto bookDto) {
         try {
-            Collection collection = collectionRepository.findById(id.longValue()).orElseThrow(() -> new EntityNotFoundException("error"));
+            Collection collection = collectionRepository.findById(id.longValue()).orElseThrow(() -> new ClassNotFoundException("error"));
             List<Integer> bookList = Arrays.asList(bookDto.getBookIds());
             log.info(String.valueOf(bookList));
             bookList.forEach((book_id) -> {
-                Book book = bookRepository.findById(book_id.longValue()).orElseThrow(() -> new EntityNotFoundException("error"));
-                book.setCollection(collection);
+                Book book = null;
+                try {
+                    book = bookRepository.findById(book_id.longValue()).orElseThrow(() -> new ClassNotFoundException("error"));
+                } catch (ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
+//                book.setCollection(collection);
                 log.info(book.toString());
-                collection.getBooks().add(book);
+//                collection.getBooks().add(book);
                 collectionRepository.save(collection);
             });
 
