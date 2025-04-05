@@ -2,6 +2,7 @@ package flip.entity;
 
 import lombok.*;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.HashSet;
@@ -11,18 +12,18 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Document
+@Document(collection="collections")
 public class Collection {
 
     @Id
-    private long collection_id;
+    private String collection_id;
 
     private String name;
 
     private Integer total_price;
-//
-//    @OneToMany(mappedBy="collection", cascade = CascadeType.PERSIST)
-//    private Set<Book> books = new HashSet<>();
+
+    @DBRef
+    private Set<Book> books = new HashSet<>();
 
     @Override
     public String toString() {

@@ -8,11 +8,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Document
+@Document(collection="books")
 public class Book {
 
     @Id
-    private long book_id;
+    private String book_id;
 
     private String name;
 
@@ -25,11 +25,6 @@ public class Book {
     private Integer sales;
 
     private Integer rating;
-
-//    @JsonIgnore
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name="collection_id", referencedColumnName = "collection_id")
-//    private Collection collection;
 
     @Override
     public String toString() {

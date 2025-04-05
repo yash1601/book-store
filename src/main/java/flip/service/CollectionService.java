@@ -33,28 +33,29 @@ public class CollectionService {
         book.setAuthor("yash");
         book.setCategory("author");
         book.setPrice(10.0f);
-//        book.setCollection(collection);
+
         Set<Book> bookList = new HashSet<>();
         bookList.add(book);
-//        collection.setBooks(bookList);
         Book book2 = new Book();
-        bookRepository.save(book2);
-        collectionRepository.save(collection);
+        bookRepository.save(book);
+
         List<Book> listBooks = new ArrayList<Book>();
         listBooks.add(book);
         listBooks.add(book2);
+        collection.setBooks(bookList);
+        collectionRepository.save(collection);
         return listBooks;
     }
 
     public void addBooksToCollection(Integer id, BookDto bookDto) {
         try {
-            Collection collection = collectionRepository.findById(id.longValue()).orElseThrow(() -> new ClassNotFoundException("error"));
+            Collection collection = collectionRepository.findById(id.toString()).orElseThrow(() -> new ClassNotFoundException("error"));
             List<Integer> bookList = Arrays.asList(bookDto.getBookIds());
             log.info(String.valueOf(bookList));
             bookList.forEach((book_id) -> {
                 Book book = null;
                 try {
-                    book = bookRepository.findById(book_id.longValue()).orElseThrow(() -> new ClassNotFoundException("error"));
+                    book = bookRepository.findById(book_id.toString()).orElseThrow(() -> new ClassNotFoundException("error"));
                 } catch (ClassNotFoundException e) {
                     throw new RuntimeException(e);
                 }

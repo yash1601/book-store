@@ -61,6 +61,11 @@ public class UserController {
         return ResponseEntity.ok(bookService.getAllBooks());
     }
 
+    @GetMapping("/books/{id}")
+    public ResponseEntity<Book> getBookById(@PathVariable("id") String id){
+        return ResponseEntity.ok(bookService.getBookById(id));
+    }
+
     @PutMapping("/books")
     public ResponseEntity<Book> editBook(@RequestParam(value = "Id", required = true) String Id, @RequestBody Book book){
         return ResponseEntity.ok(bookService.editBook(Id, book));

@@ -19,8 +19,13 @@ public class BookService {
         return bookRepository.findAll();
     }
 
+    public Book getBookById(String Id){
+        Optional<Book> bookEntity = bookRepository.findById(Id);
+        return bookEntity.orElseThrow();
+    }
+
     public Book editBook(String book_id, Book book) {
-        Optional<Book> receivedBook = bookRepository.findById(Long.valueOf(book_id));
+        Optional<Book> receivedBook = bookRepository.findById(book_id);
         Book bookObject = null;
         if(receivedBook.isPresent()) {
             bookObject = receivedBook.get();
