@@ -9,6 +9,8 @@ import flip.repository.CollectionRepository;
 import flip.repository.UserRepository;
 import flip.service.BookService;
 import flip.service.CollectionService;
+import lombok.extern.slf4j.Slf4j;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,7 @@ import flip.service.UserService;
 import jakarta.validation.Valid;
 import java.util.List;
 
+@Slf4j
 @RestController
 public class UserController {
 
@@ -42,6 +45,8 @@ public class UserController {
 
     @PostMapping("/register/user")
     public ResponseEntity<User> postNewUser(@RequestBody User user) {
+        user.setUser_id(new ObjectId().toString());
+        log.info(user.getUser_id());
         return ResponseEntity.ok(userRepository.save(user));
     }
 
