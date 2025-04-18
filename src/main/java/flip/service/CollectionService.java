@@ -26,30 +26,9 @@ public class CollectionService {
         return collectionRepository.findAll();
     }
 
-    public List<Book> initiate(){
-        Collection collection = new Collection();
-        Book book = new Book();
-        book.setName("name");
-        book.setAuthor("yash");
-        book.setCategory("author");
-        book.setPrice(10.0f);
-
-        Set<Book> bookList = new HashSet<>();
-        bookList.add(book);
-        Book book2 = new Book();
-        bookRepository.save(book);
-
-        List<Book> listBooks = new ArrayList<Book>();
-        listBooks.add(book);
-        listBooks.add(book2);
-        collection.setBooks(bookList);
-        collectionRepository.save(collection);
-        return listBooks;
-    }
-
-    public void addBooksToCollection(Integer id, BookDto bookDto) {
+    public void addBooksToCollection(Integer collectionId, BookDto bookDto) {
         try {
-            Collection collection = collectionRepository.findById(id.toString()).orElseThrow(() -> new ClassNotFoundException("error"));
+            Collection collection = collectionRepository.findById(collectionId.toString()).orElseThrow(() -> new ClassNotFoundException("error"));
             List<Integer> bookList = Arrays.asList(bookDto.getBookIds());
             log.info(String.valueOf(bookList));
             bookList.forEach((book_id) -> {
@@ -59,15 +38,14 @@ public class CollectionService {
                 } catch (ClassNotFoundException e) {
                     throw new RuntimeException(e);
                 }
-//                book.setCollection(collection);
                 log.info(book.toString());
-//                collection.getBooks().add(book);
+                collection.getBooks().add(book);
                 collectionRepository.save(collection);
             });
 
         }
         catch (Exception e){
-
+            throw new RuntimeException("Something went wrong", e);
         }
     }
 }
