@@ -24,7 +24,6 @@ public class Book {
 
     private Integer sales;
 
-    private Integer rating;
 
     @Override
     public String toString() {

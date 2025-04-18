@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -24,13 +23,16 @@ public class BookService {
         return bookEntity.orElseThrow();
     }
 
+    public void saveBooks(List<Book> books){
+        books.forEach(bookRepository::save);
+    }
+
     public Book editBook(String book_id, Book book) {
         Optional<Book> receivedBook = bookRepository.findById(book_id);
         Book bookObject = null;
         if(receivedBook.isPresent()) {
             bookObject = receivedBook.get();
             bookObject.setCategory(book.getCategory());
-            bookObject.setRating(book.getRating());
             bookObject.setPrice(book.getPrice());
             bookObject.setAuthor(book.getAuthor());
             bookObject.setName(book.getName());
