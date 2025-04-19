@@ -35,8 +35,8 @@ public class UserService {
         return userRepository.findById(new ObjectId(id).toString()).orElseThrow();
     }
 
-    public List<Book> getUserBooks(String id){
-        User userEntity = userRepository.findById(id).orElseThrow();
+    public List<Book> getUserBooks(String userName){
+        User userEntity = userRepository.findByName(userName);
         Set<Book> books = userEntity.getBooks();
         return new ArrayList<Book>(books);
     }

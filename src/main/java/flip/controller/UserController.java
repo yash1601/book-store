@@ -75,39 +75,6 @@ public class UserController {
     }
 
 
-    @PostMapping("/books")
-    public ResponseEntity<HttpStatus> postNewBook(@RequestBody @Valid List<Book> book) {
-        bookService.saveBooks(book);
-        return ResponseEntity.ok(HttpStatus.ACCEPTED);
-    }
-
-    @PutMapping("/books")
-    public ResponseEntity<Book> editBook(@RequestParam(value = "Id", required = true) String Id, @RequestBody Book book){
-        return ResponseEntity.ok(bookService.editBook(Id, book));
-    }
-
-    @PostMapping("/collection")
-    public ResponseEntity<Collection> postNewCollection(@RequestBody @Valid Collection collection) {
-        return ResponseEntity.ok(collectionRepository.save(collection));
-    }
-
-    @PutMapping("/add-to-collection")
-    public ResponseEntity<HttpStatus> updateCollection(@RequestParam(required = true) Integer collectionId, @RequestBody BookDto bookDto){
-        collectionService.addBooksToCollection(collectionId, bookDto);
-        return ResponseEntity.ok(HttpStatus.ACCEPTED);
-    }
-
-    @PutMapping("/discount")
-    public ResponseEntity<String> addDiscount(@RequestParam(required = false) String author, @RequestParam(required = false) String category, @RequestParam Integer discount){
-        try {
-            bookService.addDiscount(author, category, discount);
-        }
-        catch (RuntimeException e){
-            return ResponseEntity.ok(e.getMessage());
-        }
-        return ResponseEntity.ok("Discount added");
-    }
-
     @GetMapping("/books")
     public ResponseEntity<List<Book>> getAllBooks(){
         return ResponseEntity.ok(bookService.getAllBooks());
@@ -131,14 +98,18 @@ public class UserController {
         return ResponseEntity.ok("User updated");
     }
 
-    @GetMapping("/user/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable("id") String Id){
-        return ResponseEntity.ok(userService.getUserById(Id));
+    @GetMapping("/user/")
+    public ResponseEntity<User> getUserById(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userName = authentication.getName();
+        return ResponseEntity.ok(userRepository.findByName(userName));
     }
 
-    @GetMapping("/user/{id}/books")
-    public ResponseEntity<List<Book>> getUserBooks(@PathVariable("id") String Id){
-        return ResponseEntity.ok(userService.getUserBooks(Id));
+    @GetMapping("/user/books")
+    public ResponseEntity<List<Book>> getUserBooks(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userName = authentication.getName();
+        return ResponseEntity.ok(userService.getUserBooks(userName));
     }
 
 }
